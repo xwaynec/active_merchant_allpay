@@ -25,6 +25,20 @@ You can get Payment API and SPEC in [Allpay API](http://www.allpay.com.tw/Servic
 Then create an initializer, like initializers/allpay.rb. Add the following configurations depends on your settings.
 
 ``` ruby
+
+# config/environments/development.rb
+config.after_initialize do
+  ActiveMerchant::Billing::Base.integration_mode = :development
+end
+
+# config/environments/production.rb
+config.after_initialize do
+  ActiveMerchant::Billing::Base.integration_mode = :production
+end
+
+```
+
+``` ruby
 ActiveMerchant::Billing::Integrations::Allpay.setup do |allpay|
   if Rails.env.development?
     allpay.merchant_id = '5566183'
