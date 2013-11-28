@@ -8,7 +8,7 @@ Now it supports Credit card(信用卡), ATM(虛擬ATM) and CVS(超商繳費).
 Add this line to your application's Gemfile:
 
     gem 'activemerchant'
-    gem 'active_merchant_allpay'
+    gem 'active_merchant_allpay', '>=0.1.0'
 
 And then execute:
 
@@ -74,7 +74,6 @@ Once you’ve configured ActiveMerchantAllpay, you need a checkout form; it look
                           @order.user.email,
                           :service => :allpay,
                           :html    => { :id => 'allpay-atm-form', :method => :post } do |service| %>
-
     <% service.merchant_trade_no @order.payments.last.identifier %>
     <% service.merchant_trade_date @order.created_at %>
     <% service.total_amount @order.total.to_i %>
