@@ -19,4 +19,9 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency 'activemerchant', '>= 1.9.4'
+
+  spec.add_development_dependency('rake')
+  spec.add_development_dependency('mocha', '~> 0.13.0')
+  spec.add_development_dependency('rails', '>= 2.3.14')
+  spec.add_development_dependency('thor')
 end
