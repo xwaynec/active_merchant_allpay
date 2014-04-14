@@ -8,7 +8,7 @@ Now it supports Credit card(信用卡), ATM(虛擬ATM) and CVS(超商繳費).
 Add this line to your application's Gemfile:
 
     gem 'activemerchant'
-    gem 'active_merchant_allpay', '>=0.1.0'
+    gem 'active_merchant_allpay', '>=0.1.2'
 
 And then execute:
 
