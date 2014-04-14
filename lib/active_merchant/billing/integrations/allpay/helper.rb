@@ -57,22 +57,9 @@ module ActiveMerchant #:nodoc:
 
           def encrypted_data
 
-            hash_data = {
-              :ChoosePayment => @fields['ChoosePayment'],
-              :ClientBackURL => @fields['ClientBackURL'],
-              :ItemName => @fields['ItemName'],
-              :MerchantID => @fields['MerchantID'],
-              :MerchantTradeDate => @fields['MerchantTradeDate'],
-              :MerchantTradeNo => @fields['MerchantTradeNo'],
-              :PaymentType => @fields['PaymentType'],
-              :ReturnURL => @fields['ReturnURL'],
-              :TotalAmount => @fields['TotalAmount'],
-              :TradeDesc => @fields['TradeDesc']
-            }
-
-            raw_data = hash_data.map do |x, y|
-              "#{x}=#{y}"
-            end.join('&')
+            raw_data = @fields.sort.map{|field, value|
+              "#{field}=#{value}"
+            }.join('&')
 
             hash_raw_data = "HashKey=#{ActiveMerchant::Billing::Integrations::Allpay.hash_key}&#{raw_data}&HashIV=#{ActiveMerchant::Billing::Integrations::Allpay.hash_iv}"
 
