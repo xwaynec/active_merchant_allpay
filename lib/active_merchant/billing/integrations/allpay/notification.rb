@@ -20,7 +20,8 @@ module ActiveMerchant #:nodoc:
             @params.delete('controller')
             @params.delete('action')
 
-            raw_data = @params.map do |x, y|
+            # 把 params 轉成 query string 前必須先依照 hash key 做 sort
+            raw_data = Hash[@params.sort].map do |x, y|
               "#{x}=#{y}"
             end.join('&')
 
