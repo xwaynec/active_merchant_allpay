@@ -4,6 +4,8 @@ class AllpayNotificationTest < Test::Unit::TestCase
   include ActiveMerchant::Billing::Integrations
 
   def setup
+    ActiveMerchant::Billing::Integrations::Allpay.hash_key = '5294y06JbISpM5x9'
+    ActiveMerchant::Billing::Integrations::Allpay.hash_iv = 'v77hoKGq4kWxNNIS'
     @allpay = Allpay::Notification.new(http_raw_data)
   end
 
@@ -18,6 +20,13 @@ class AllpayNotificationTest < Test::Unit::TestCase
 
   def test_complete?
     assert @allpay.complete?
+  end
+
+  def test_checksum_ok?
+    assert @allpay.checksum_ok?
+
+    # Should preserve mac value
+    assert @allpay.params['CheckMacValue'].present?
   end
 
   private

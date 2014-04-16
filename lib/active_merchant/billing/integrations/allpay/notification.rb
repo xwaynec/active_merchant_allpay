@@ -33,13 +33,12 @@ module ActiveMerchant #:nodoc:
           end
 
           def checksum_ok?
-            checksum = @params.delete('CheckMacValue')
+            params_copy = @params.clone
 
-            @params.delete('controller')
-            @params.delete('action')
+            checksum = params_copy.delete('CheckMacValue')
 
             # 把 params 轉成 query string 前必須先依照 hash key 做 sort
-            raw_data = Hash[@params.sort].map do |x, y|
+            raw_data = params_copy.sort.map do |x, y|
               "#{x}=#{y}"
             end.join('&')
 
