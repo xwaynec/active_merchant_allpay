@@ -81,7 +81,7 @@ Once you’ve configured ActiveMerchantAllpay, you need a checkout form; it look
     <% service.item_name @order.number %>
     <% service.choose_payment ActiveMerchant::Billing::Integrations::Allpay::PAYMENT_ATM %>
     <% service.client_back_url spree.orders_account_url %>
-    <% service.return_url allpay_atm_return_url %>
+    <% service.notify_url allpay_atm_return_url %>
     <% service.encrypted_data %>
     <%= submit_tag 'Buy!' %>
   <% end %>
@@ -91,7 +91,7 @@ Also need a notification action when Allpay service notifies your server; it loo
 
 ``` ruby
   def notify
-    notification = ActiveMerchant::Billing::Integrations::Allpay::Notification.new(params)
+    notification = ActiveMerchant::Billing::Integrations::Allpay::Notification.new(request.raw_post)
 
     order = Order.find_by_number(notification.merchant_trade_no)
 
@@ -104,6 +104,13 @@ Also need a notification action when Allpay service notifies your server; it loo
     render text: '1|OK', status: 200
   end
 ```
+
+## Upgrade Notes
+
+When upgrading from 0.1.3 and below to any higher versions, you need to make the following changes:
+
+- the notification initialize with raw post string (instead of a hash of params)
+- `return_url()` should be renamed to `notify_url()` (server-side callback url).
 
 ## Contributing
 
