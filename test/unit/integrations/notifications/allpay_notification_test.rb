@@ -4,6 +4,8 @@ class AllpayNotificationTest < Test::Unit::TestCase
   include ActiveMerchant::Billing::Integrations
 
   def setup
+    ActiveMerchant::Billing::Integrations::Allpay.hash_key = '5294y06JbISpM5x9'
+    ActiveMerchant::Billing::Integrations::Allpay.hash_iv = 'v77hoKGq4kWxNNIS'
     @allpay = Allpay::Notification.new(http_raw_data)
   end
 
@@ -14,6 +16,17 @@ class AllpayNotificationTest < Test::Unit::TestCase
     assert_equal 'Credit_CreditCard', p['PaymentType']
     assert_equal 'BC586977559ED305BEC4C334DFDC881D', p['CheckMacValue']
     assert_equal '2014/04/15 15:39:38', p['PaymentDate']
+  end
+
+  def test_complete?
+    assert @allpay.complete?
+  end
+
+  def test_checksum_ok?
+    assert @allpay.checksum_ok?
+
+    # Should preserve mac value
+    assert @allpay.params['CheckMacValue'].present?
   end
 
   private
