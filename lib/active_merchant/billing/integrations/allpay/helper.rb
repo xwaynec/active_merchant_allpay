@@ -66,12 +66,26 @@ module ActiveMerchant #:nodoc:
             }.join('&')
 
             hash_raw_data = "HashKey=#{ActiveMerchant::Billing::Integrations::Allpay.hash_key}&#{raw_data}&HashIV=#{ActiveMerchant::Billing::Integrations::Allpay.hash_iv}"
-
-            url_endcode_data = (CGI::escape(hash_raw_data)).downcase
+            url_endcode_data = self.class.url_encode(hash_raw_data)
+            url_endcode_data.downcase!
 
             add_field 'CheckMacValue', Digest::MD5.hexdigest(url_endcode_data).upcase
           end
 
+          # Allpay .NET url encoding
+          # Code based from CGI.escape()
+          # Some special characters (e.g. "()*!") are not escaped on Allpay server when they generate their check sum value, causing CheckMacValue Error.
+          #
+          # TODO: The following characters still cause CheckMacValue error:
+          #       '<', "\n", "\r", '&'
+          def self.url_encode(text)
+            text = text.dup
+            text.gsub!(/([^ a-zA-Z0-9\(\)\!\*_.-]+)/) do
+              '%' + $1.unpack('H2' * $1.bytesize).join('%')
+            end
+            text.tr!(' ', '+')
+            text
+          end
         end
       end
     end
