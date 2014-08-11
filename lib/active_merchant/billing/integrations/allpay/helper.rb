@@ -69,7 +69,7 @@ module ActiveMerchant #:nodoc:
 
             url_endcode_data = (CGI::escape(hash_raw_data)).downcase
 
-            add_field 'CheckMacValue', Digest::MD5.hexdigest(url_endcode_data)
+            add_field 'CheckMacValue', Digest::MD5.hexdigest(url_endcode_data).upcase
           end
 
         end
