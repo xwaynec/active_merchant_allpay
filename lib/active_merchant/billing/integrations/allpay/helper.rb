@@ -72,6 +72,8 @@ module ActiveMerchant #:nodoc:
             url_endcode_data = self.class.url_encode(hash_raw_data)
             url_endcode_data.downcase!
 
+            binding.pry if ActiveMerchant::Billing::Integrations::Allpay.debug
+
             add_field 'CheckMacValue', Digest::MD5.hexdigest(url_endcode_data).upcase
           end
 
