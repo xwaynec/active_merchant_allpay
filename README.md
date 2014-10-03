@@ -1,13 +1,13 @@
 # ActiveMerchantAllpay
 
 This plugin is an active_merchant patch forAllpay(歐付寶) online payment in Taiwan.
-Now it supports Credit card(信用卡), ATM(虛擬ATM) and CVS(超商繳費).
+Now it supports Credit card(信用卡), ATM(虛擬ATM), Alipay(支付寶) and CVS(超商繳費).
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'activemerchant'
+    gem 'activemerchant', "~> 1.43.3"
     gem 'active_merchant_allpay', '>=0.1.2'
 
 And then execute:
@@ -41,10 +41,12 @@ end
 ``` ruby
 ActiveMerchant::Billing::Integrations::Allpay.setup do |allpay|
   if Rails.env.development?
-    allpay.merchant_id = '5566183'
-    allpay.hash_key    = '56cantdieohyeah'
-    allpay.hash_iv     = '183club'
+    # default setting for stage test
+    allpay.merchant_id = '2000132'
+    allpay.hash_key    = '5294y06JbISpM5x9'
+    allpay.hash_iv     = 'v77hoKGq4kWxNNIS'
   else
+    # change to yours
     allpay.merchant_id = '7788520'
     allpay.hash_key    = 'adfas123412343j'
     allpay.hash_iv     = '123ddewqerasdfas'
@@ -65,6 +67,9 @@ Now support three payment methods:
 
   # 3. CVS (convenience store)
   ActiveMerchant::Billing::Integrations::Allpay::PAYMENT_CVS
+  
+  # 4. Alipay
+  ActiveMerchant::Billing::Integrations::Allpay::PAYMENT_ALIPAY
 ```
 
 Once you’ve configured ActiveMerchantAllpay, you need a checkout form; it looks like:
