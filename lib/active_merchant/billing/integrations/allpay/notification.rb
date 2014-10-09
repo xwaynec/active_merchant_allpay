@@ -25,6 +25,10 @@ module ActiveMerchant #:nodoc:
             case @params['RtnCode']
             when '1' #付款成功
               true
+            when '2' # ATM 取號成功
+              true
+            when '10100073' # CVS 或 BARCODE 取號成功
+              true
             when '800' #貨到付款訂單建立成功
               true
             else
@@ -102,6 +106,24 @@ module ActiveMerchant #:nodoc:
 
           def check_mac_value
             @params['CheckMacValue']
+          end
+
+          # for ATM
+          def bank_code
+            @params['BankCode']
+          end
+
+          def v_account
+            @params['vAccount']
+          end
+
+          def expire_date
+            @params['ExpireDate']
+          end
+
+          # for CVS
+          def payment_no
+            @params['PaymentNo']
           end
 
           def currency

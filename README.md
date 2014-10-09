@@ -3,6 +3,8 @@
 This plugin is an active_merchant patch forAllpay(歐付寶) online payment in Taiwan.
 Now it supports Credit card(信用卡), ATM(虛擬ATM), Alipay(支付寶) and CVS(超商繳費).
 
+It has been tested on Rails 4.1.6 successfully.
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -39,6 +41,8 @@ end
 ```
 
 ``` ruby
+
+# initializers/allpay.rb
 ActiveMerchant::Billing::Integrations::Allpay.setup do |allpay|
   if Rails.env.development?
     # default setting for stage test
@@ -109,6 +113,23 @@ Also need a notification action when Allpay service notifies your server; it loo
     render text: '1|OK', status: 200
   end
 ```
+
+## Troublechooting
+If you get a error "undefined method \`payment\_service\_for\`", you can add following configurations to initializers/allpay.rb. 
+```
+require "active_merchant/billing/integrations/action_view_helper"
+ActionView::Base.send(:include, ActiveMerchant::Billing::Integrations::ActionViewHelper)
+```
+
+Some allpay error due to CSRF token ("authenticity_token is not in spec"), you can add following scripts to remove them manually.
+```
+<script>
+$("input[name=utf8]").remove();
+$("input[name=authenticity_token]").remove();
+</script>
+```
+It's caused from payment\_service\_for helper function when generating by [offsite_payments](https://github.com/Shopify/offsite_payments) gem (offsite\_payments/lib/offsite\_payments/action\_view\_helper.rb)
+  
 
 ## Upgrade Notes
 
