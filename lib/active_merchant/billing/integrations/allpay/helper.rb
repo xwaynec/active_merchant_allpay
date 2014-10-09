@@ -29,6 +29,8 @@ module ActiveMerchant #:nodoc:
           mapping :redirect_url, 'OrderResultURL'
           # 交易描述
           mapping :description, 'TradeDesc'
+          # ATM, CVS 序號回傳網址
+          mapping :payment_info_url, 'PaymentInfoURL'
 
           ### Allpay 專屬介面
 
