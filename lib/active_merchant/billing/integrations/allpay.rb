@@ -11,6 +11,7 @@ module ActiveMerchant #:nodoc:
         PAYMENT_CREDIT_CARD = 'Credit'
         PAYMENT_ATM         = 'ATM'
         PAYMENT_CVS         = 'CVS'
+        PAYMENT_ALIPAY      = 'Alipay'
 
         PAYMENT_TYPE        = 'aio'
 
@@ -18,6 +19,7 @@ module ActiveMerchant #:nodoc:
         mattr_accessor :merchant_id
         mattr_accessor :hash_key
         mattr_accessor :hash_iv
+        mattr_accessor :debug
 
         def self.service_url
           mode = ActiveMerchant::Billing::Base.integration_mode
