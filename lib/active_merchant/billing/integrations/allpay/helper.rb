@@ -51,6 +51,8 @@ module ActiveMerchant #:nodoc:
           #   ALL:不指定付款方式, 由歐付寶顯示付款方式 選擇頁面
           mapping :choose_payment, 'ChoosePayment'
 
+          mapping :choose_sub_payment, 'ChooseSubPayment'
+
           # 商品名稱
           # 多筆請以井號分隔 (#)
           mapping :item_name, 'ItemName'
