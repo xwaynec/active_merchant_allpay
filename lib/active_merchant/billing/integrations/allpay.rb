@@ -13,6 +13,20 @@ module ActiveMerchant #:nodoc:
         PAYMENT_CVS         = 'CVS'
         PAYMENT_ALIPAY      = 'Alipay'
 
+        SUBPAYMENT_ATM_TAISHIN      = 'TAISHIN'
+        SUBPAYMENT_ATM_ESUN         = 'ESUN'
+        SUBPAYMENT_ATM_HUANAN       = 'HUANAN'
+        SUBPAYMENT_ATM_BOT          = 'BOT'
+        SUBPAYMENT_ATM_FUBON        = 'FUBON'
+        SUBPAYMENT_ATM_CHINATRUST   = 'CHINATRUST'
+        SUBPAYMENT_ATM_FIRST        = 'FIRST'
+
+        SUBPAYMENT_CVS_CVS    = 'CVS'
+        SUBPAYMENT_CVS_OK     = 'OK'
+        SUBPAYMENT_CVS_FAMILY = 'FAMILY'
+        SUBPAYMENT_CVS_HILIFE = 'HILIFE'
+        SUBPAYMENT_CVS_IBON   = 'IBON'
+
         PAYMENT_TYPE        = 'aio'
 
         mattr_accessor :service_url

@@ -21,16 +21,18 @@ module ActiveMerchant #:nodoc:
           mapping :total_amount, 'TotalAmount'
           mapping :amount, 'TotalAmount' # AM common
           # 付款完成通知回傳網址
-          mapping :return_url, 'ReturnURL' # AM common
+          mapping :notify_url, 'ReturnURL' # AM common
           # Client 端返回廠商網址
-          mapping :client_back_url, 'ClientBackURL'
-          # mapping :return_url, 'ClientBackURL' # AM common
+          # mapping :client_back_url, 'ClientBackURL'
+          mapping :return_url, 'ClientBackURL' # AM common
           # 付款完成 redirect 的網址
           mapping :redirect_url, 'OrderResultURL'
           # 交易描述
           mapping :description, 'TradeDesc'
-          # ATM, CVS 序號回傳網址
+          # ATM, CVS 序號回傳網址 (Server Side)
           mapping :payment_info_url, 'PaymentInfoURL'
+          # ATM, CVS 序號頁面回傳網址 (Client Side)
+          mapping :payment_redirect_url, 'ClientRedirectURL'
 
           ### Allpay 專屬介面
 
@@ -48,6 +50,8 @@ module ActiveMerchant #:nodoc:
           #   TopUpUsed:儲值消費
           #   ALL:不指定付款方式, 由歐付寶顯示付款方式 選擇頁面
           mapping :choose_payment, 'ChoosePayment'
+
+          mapping :choose_sub_payment, 'ChooseSubPayment'
 
           # 商品名稱
           # 多筆請以井號分隔 (#)
