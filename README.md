@@ -86,10 +86,10 @@ Once you’ve configured ActiveMerchantAllpay, you need a checkout form; it look
     <% service.merchant_trade_no @order.payments.last.identifier %>
     <% service.merchant_trade_date @order.created_at %>
     <% service.total_amount @order.total.to_i %>
-    <% service.trade_desc @order.number %>
+    <% service.description @order.number %>
     <% service.item_name @order.number %>
     <% service.choose_payment ActiveMerchant::Billing::Integrations::Allpay::PAYMENT_ATM %>
-    <% service.client_back_url spree.orders_account_url %>
+    <% service.return_url spree.orders_account_url %>
     <% service.notify_url allpay_atm_return_url %>
     <% service.encrypted_data %>
     <%= submit_tag 'Buy!' %>
