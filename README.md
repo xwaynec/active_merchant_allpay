@@ -23,7 +23,7 @@ Or install it yourself as:
 
 ## Usage
 
-You can get Payment API and SPEC in [Allpay API](http://www.allpay.com.tw/Service/API).
+You can get Payment API and SPEC in [Allpay API](https://www.allpay.com.tw/Service/API_Help).
 Then create an initializer, like initializers/allpay.rb. Add the following configurations depends on your settings.
 
 ``` ruby
