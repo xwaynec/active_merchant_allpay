@@ -129,6 +129,19 @@ module ActiveMerchant #:nodoc:
           def currency
             'TWD'
           end
+
+          # for BARCODE
+          def barcode1
+            @params['Barcode1']
+          end
+
+          def barcode2
+            @params['Barcode2']
+          end
+
+          def barcode3
+            @params['Barcode3']
+          end
         end
       end
     end
