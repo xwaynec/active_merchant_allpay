@@ -1,7 +1,7 @@
 # ActiveMerchantAllpay
 
 This plugin is an active_merchant patch forAllpay(歐付寶) online payment in Taiwan.
-Now it supports Credit card(信用卡), ATM(虛擬ATM), Alipay(支付寶) and CVS(超商繳費).
+Now it supports Credit card(信用卡), ATM(虛擬ATM), Alipay(支付寶), CVS(超商繳費) and BARCODE(超商條碼).
 
 It has been tested on Rails 4.1.6 successfully.
 
@@ -74,6 +74,9 @@ Now support three payment methods:
   
   # 4. Alipay
   ActiveMerchant::Billing::Integrations::Allpay::PAYMENT_ALIPAY
+
+  # 5. BARCODE
+  ActiveMerchant::Billing::Integrations::Allpay::PAYMENT_BARCODE
 ```
 
 Once you’ve configured ActiveMerchantAllpay, you need a checkout form; it looks like:
