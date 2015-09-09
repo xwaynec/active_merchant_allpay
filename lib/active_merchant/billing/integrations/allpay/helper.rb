@@ -33,6 +33,16 @@ module ActiveMerchant #:nodoc:
           mapping :payment_info_url, 'PaymentInfoURL'
           # ATM, CVS 序號頁面回傳網址 (Client Side)
           mapping :payment_redirect_url, 'ClientRedirectURL'
+          # BARCODE, CVS 超商繳費截止時間
+          mapping :store_expire_date, 'StoreExpireDate'
+          # BARCODE, CVS 交易描述1
+          mapping :desc_1, 'Desc_1'
+          # BARCODE, CVS 交易描述2
+          mapping :desc_2, 'Desc_2'
+          # BARCODE, CVS 交易描述3
+          mapping :desc_3, 'Desc_3'
+          # BARCODE, CVS 交易描述4
+          mapping :desc_4, 'Desc_4'
 
           ### Allpay 專屬介面
 

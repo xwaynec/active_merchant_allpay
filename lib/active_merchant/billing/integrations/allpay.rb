@@ -12,6 +12,7 @@ module ActiveMerchant #:nodoc:
         PAYMENT_ATM         = 'ATM'
         PAYMENT_CVS         = 'CVS'
         PAYMENT_ALIPAY      = 'Alipay'
+        PAYMENT_BARCODE     = 'BARCODE'
 
         SUBPAYMENT_ATM_TAISHIN      = 'TAISHIN'
         SUBPAYMENT_ATM_ESUN         = 'ESUN'
