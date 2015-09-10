@@ -29,6 +29,28 @@ module ActiveMerchant #:nodoc:
           mapping :redirect_url, 'OrderResultURL'
           # 交易描述
           mapping :description, 'TradeDesc'
+          # 商品銷售網址
+          mapping :item_url, 'ItemURL'
+          # 是否需要額外的付款資訊, defalut: N
+          mapping :need_extra_paid_info, 'NeedExtraPaidInfo'
+          # 裝置來源, defalut: P
+          mapping :devise_source, 'DeviceSource'
+          # 忽略的付款方式
+          mapping :ignore_payment, 'IgnorePayment'
+          # 特約合作平台商代號(由allpay提供)
+          mapping :platform_id, 'PlatformID'
+          # 電子發票開註記
+          mapping :invoice_mark, 'InvoiceMark'
+          # 是否延遲撥款, defalut: 0
+          mapping :hold_trade_amt, 'HoldTradeAMT'
+          # allpay 的會員編號
+          mapping :allpay_id, 'AllPayID'
+          # allpay 的會員識別碼
+          mapping :account_id, 'AccountID'
+          # CheckMacValue 加密類型, defalut: 0
+          mapping :encrypt_type, 'EncryptType'
+          # ATM 允許繳費有效天數
+          mapping :expire_date, 'ExpireDate'
           # ATM, CVS 序號回傳網址 (Server Side)
           mapping :payment_info_url, 'PaymentInfoURL'
           # ATM, CVS 序號頁面回傳網址 (Client Side)

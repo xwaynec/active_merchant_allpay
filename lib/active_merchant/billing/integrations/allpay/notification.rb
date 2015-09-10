@@ -42,7 +42,8 @@ module ActiveMerchant #:nodoc:
             checksum = params_copy.delete('CheckMacValue')
 
             # 把 params 轉成 query string 前必須先依照 hash key 做 sort
-            raw_data = params_copy.sort.map do |x, y|
+            # 依照英文字母排序，由 A 到 Z 且大小寫不敏感
+            raw_data = params_copy.sort_by{ |k,v| k.downcase }.map do |x, y|
               "#{x}=#{y}"
             end.join('&')
 
