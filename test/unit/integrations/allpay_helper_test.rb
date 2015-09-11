@@ -1,8 +1,8 @@
 require 'test_helper'
 
 class AllpayHelperTest < Test::Unit::TestCase
-  include ActiveMerchant::Billing::Integrations
-  
+  include OffsitePayments::Integrations
+
   def setup
   end
 
@@ -17,8 +17,8 @@ class AllpayHelperTest < Test::Unit::TestCase
     @helper.add_field 'TotalAmount', '500'
     @helper.add_field 'TradeDesc', 'dafsdfaff'
 
-    ActiveMerchant::Billing::Integrations::Allpay.hash_key = 'xdfaefasdfasdfa32d'
-    ActiveMerchant::Billing::Integrations::Allpay.hash_iv = 'sdfxfafaeafwexfe'
+    OffsitePayments::Integrations::Allpay.hash_key = 'xdfaefasdfasdfa32d'
+    OffsitePayments::Integrations::Allpay.hash_iv = 'sdfxfafaeafwexfe'
 
     @helper.encrypted_data
 
@@ -37,8 +37,8 @@ class AllpayHelperTest < Test::Unit::TestCase
     @helper.add_field 'TradeDesc', ( '~`@#$%*^()_-+={}[]|\\"\'>,.?/:;' + "\t" )
     @helper.add_field 'ChoosePayment', 'Credit'
 
-    ActiveMerchant::Billing::Integrations::Allpay.hash_key = '5294y06JbISpM5x9'
-    ActiveMerchant::Billing::Integrations::Allpay.hash_iv = 'v77hoKGq4kWxNNIS'
+    OffsitePayments::Integrations::Allpay.hash_key = '5294y06JbISpM5x9'
+    OffsitePayments::Integrations::Allpay.hash_iv = 'v77hoKGq4kWxNNIS'
 
     @helper.encrypted_data
 

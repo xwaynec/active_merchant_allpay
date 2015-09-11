@@ -1,11 +1,11 @@
 require 'test_helper'
 
 class AllpayNotificationTest < Test::Unit::TestCase
-  include ActiveMerchant::Billing::Integrations
+  include OffsitePayments::Integrations
 
   def setup
-    ActiveMerchant::Billing::Integrations::Allpay.hash_key = '5294y06JbISpM5x9'
-    ActiveMerchant::Billing::Integrations::Allpay.hash_iv = 'v77hoKGq4kWxNNIS'
+    OffsitePayments::Integrations::Allpay.hash_key = '5294y06JbISpM5x9'
+    OffsitePayments::Integrations::Allpay.hash_iv = 'v77hoKGq4kWxNNIS'
     @allpay = Allpay::Notification.new(http_raw_data)
   end
 
