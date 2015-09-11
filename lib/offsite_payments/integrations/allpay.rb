@@ -34,7 +34,7 @@ module OffsitePayments #:nodoc:
       mattr_accessor :debug
 
       def self.service_url
-        mode = ActiveMerchant::Billing::Base.integration_mode
+        mode = ActiveMerchant::Billing::Base.mode
         case mode
           when :production
             'https://payment.allpay.com.tw/Cashier/AioCheckOut'

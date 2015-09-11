@@ -30,12 +30,12 @@ Then create an initializer, like initializers/allpay.rb. Add the following confi
 
 # config/environments/development.rb
 config.after_initialize do
-  ActiveMerchant::Billing::Base.integration_mode = :development
+  ActiveMerchant::Billing::Base.mode = :development
 end
 
 # config/environments/production.rb
 config.after_initialize do
-  ActiveMerchant::Billing::Base.integration_mode = :production
+  ActiveMerchant::Billing::Base.mode = :production
 end
 
 ```
@@ -71,7 +71,7 @@ Now support three payment methods:
 
   # 3. CVS (convenience store)
   ActiveMerchant::Billing::Integrations::Allpay::PAYMENT_CVS
-  
+
   # 4. Alipay
   ActiveMerchant::Billing::Integrations::Allpay::PAYMENT_ALIPAY
 
@@ -86,13 +86,13 @@ Once you’ve configured ActiveMerchantAllpay, you need a checkout form; it look
                           @order.user.email,
                           :service => :allpay,
                           :html    => { :id => 'allpay-atm-form', :method => :post } do |service| %>
-    <% service.merchant_trade_no @order.payments.last.identifier %>
+    <% service.merchant_trade_no @order.identifier %>
     <% service.merchant_trade_date @order.created_at %>
     <% service.total_amount @order.total.to_i %>
-    <% service.description @order.number %>
-    <% service.item_name @order.number %>
-    <% service.choose_payment ActiveMerchant::Billing::Integrations::Allpay::PAYMENT_ATM %>
-    <% service.return_url spree.orders_account_url %>
+    <% service.description @order.id %>
+    <% service.item_name @order.id %>
+    <% service.choose_payment OffsitePayments::Integrations::Allpay::PAYMENT_ATM %>
+    <% service.return_url root_path %>
     <% service.notify_url allpay_atm_return_url %>
     <% service.encrypted_data %>
     <%= submit_tag 'Buy!' %>
@@ -118,7 +118,7 @@ Also need a notification action when Allpay service notifies your server; it loo
 ```
 
 ## Troublechooting
-If you get a error "undefined method \`payment\_service\_for\`", you can add following configurations to initializers/allpay.rb. 
+If you get a error "undefined method \`payment\_service\_for\`", you can add following configurations to initializers/allpay.rb.
 ```
 require "active_merchant/billing/integrations/action_view_helper"
 ActionView::Base.send(:include, ActiveMerchant::Billing::Integrations::ActionViewHelper)
@@ -132,7 +132,7 @@ $("input[name=authenticity_token]").remove();
 </script>
 ```
 It's caused from payment\_service\_for helper function when generating by [offsite_payments](https://github.com/Shopify/offsite_payments) gem (offsite\_payments/lib/offsite\_payments/action\_view\_helper.rb)
-  
+
 
 ## Upgrade Notes
 
@@ -148,4 +148,3 @@ When upgrading from 0.1.3 and below to any higher versions, you need to make the
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
-
