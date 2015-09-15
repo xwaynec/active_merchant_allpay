@@ -1,16 +1,20 @@
 # ActiveMerchantAllpay
 
-This plugin is an active_merchant patch forAllpay(歐付寶) online payment in Taiwan.
-Now it supports Credit card(信用卡), ATM(虛擬ATM), Alipay(支付寶), CVS(超商繳費) and BARCODE(超商條碼).
+This plugin is an active_merchant patch for Allpay(歐付寶) online payment in Taiwan.
+Now it supports:
+ - Credit card(信用卡)
+ - ATM(虛擬ATM)
+ - Alipay(支付寶)
+ - CVS(超商繳費)
+ - BARCODE(超商條碼).
 
-It has been tested on Rails 4.1.6 successfully.
+It has been tested on Rails 4.2 successfully.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'activemerchant', "~> 1.43.3"
-    gem 'active_merchant_allpay', '>=0.1.2'
+    gem 'active_merchant_allpay', github: 'imgarylai/active_merchant_allpay'
 
 And then execute:
 
@@ -18,7 +22,6 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install activemerchant
     $ gem install active_merchant_allpay
 
 ## Usage
@@ -43,7 +46,11 @@ end
 ``` ruby
 
 # initializers/allpay.rb
-ActiveMerchant::Billing::Integrations::Allpay.setup do |allpay|
+
+require "offsite_payments/action_view_helper"
+ActionView::Base.send(:include, OffsitePayments::ActionViewHelper)
+
+OffsitePayments::Integrations::Allpay.setup do |allpay|
   if Rails.env.development?
     # default setting for stage test
     allpay.merchant_id = '2000132'
@@ -64,19 +71,19 @@ Now support three payment methods:
 
 ``` ruby
   # 1. Credit card
-  ActiveMerchant::Billing::Integrations::Allpay::PAYMENT_CREDIT_CARD
+  OffsitePayments::Integrations::Allpay::PAYMENT_CREDIT_CARD
 
   # 2. ATM
-  ActiveMerchant::Billing::Integrations::Allpay::PAYMENT_ATM
+  OffsitePayments::Integrations::Allpay::PAYMENT_ATM
 
   # 3. CVS (convenience store)
-  ActiveMerchant::Billing::Integrations::Allpay::PAYMENT_CVS
+  OffsitePayments::Integrations::Allpay::PAYMENT_CVS
 
   # 4. Alipay
-  ActiveMerchant::Billing::Integrations::Allpay::PAYMENT_ALIPAY
+  OffsitePayments::Integrations::Allpay::PAYMENT_ALIPAY
 
   # 5. BARCODE
-  ActiveMerchant::Billing::Integrations::Allpay::PAYMENT_BARCODE
+  OffsitePayments::Integrations::Allpay::PAYMENT_BARCODE
 ```
 
 Once you’ve configured ActiveMerchantAllpay, you need a checkout form; it looks like:
@@ -103,7 +110,7 @@ Also need a notification action when Allpay service notifies your server; it loo
 
 ``` ruby
   def notify
-    notification = ActiveMerchant::Billing::Integrations::Allpay::Notification.new(request.raw_post)
+    notification = OffsitePayments::Integrations::Allpay::Notification.new(request.raw_post)
 
     order = Order.find_by_number(notification.merchant_trade_no)
 
@@ -117,6 +124,7 @@ Also need a notification action when Allpay service notifies your server; it loo
   end
 ```
 
+<<<<<<< HEAD
 ## Troublechooting
 If you get a error "undefined method \`payment\_service\_for\`", you can add following configurations to initializers/allpay.rb.
 ```
@@ -132,7 +140,6 @@ $("input[name=authenticity_token]").remove();
 </script>
 ```
 It's caused from payment\_service\_for helper function when generating by [offsite_payments](https://github.com/Shopify/offsite_payments) gem (offsite\_payments/lib/offsite\_payments/action\_view\_helper.rb)
-
 
 ## Upgrade Notes
 

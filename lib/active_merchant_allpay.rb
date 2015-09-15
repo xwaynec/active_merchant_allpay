@@ -7,3 +7,5 @@ module OffsitePayments
     autoload :Allpay, 'offsite_payments/integrations/allpay'
   end
 end
+
+ActionView::Base.send(:include, OffsitePayments::ActionViewHelper)
