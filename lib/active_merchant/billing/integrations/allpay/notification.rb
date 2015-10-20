@@ -49,7 +49,8 @@ module ActiveMerchant #:nodoc:
 
             hash_raw_data = "HashKey=#{ActiveMerchant::Billing::Integrations::Allpay.hash_key}&#{raw_data}&HashIV=#{ActiveMerchant::Billing::Integrations::Allpay.hash_iv}"
 
-            url_endcode_data = (CGI::escape(hash_raw_data)).downcase
+            url_endcode_data = ActiveMerchant::Billing::Integrations::Allpay::Helper.url_encode(hash_raw_data)
+            url_endcode_data.downcase!
 
             (Digest::MD5.hexdigest(url_endcode_data) == checksum.to_s.downcase)
           end
