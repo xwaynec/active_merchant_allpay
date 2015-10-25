@@ -1,5 +1,6 @@
-require "active_merchant_allpay/version"
-require "active_merchant"
+require 'action_view'
+require 'active_merchant_allpay/version'
+require 'active_merchant'
 require 'offsite_payments'
 
 module OffsitePayments
