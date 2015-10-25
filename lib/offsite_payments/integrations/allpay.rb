@@ -1,4 +1,3 @@
-require 'cgi'
 require 'digest/md5'
 require 'net/http'
 
@@ -222,7 +221,7 @@ module OffsitePayments #:nodoc:
 
           hash_raw_data = "HashKey=#{OffsitePayments::Integrations::Allpay.hash_key}&#{raw_data}&HashIV=#{OffsitePayments::Integrations::Allpay.hash_iv}"
 
-          url_encode_data = self.class.url_encode(hash_raw_data)
+          url_encode_data = OffsitePayments::Integrations::Allpay::Helper.url_encode(hash_raw_data)
           url_encode_data.downcase!
 
           (Digest::MD5.hexdigest(url_encode_data) == checksum.to_s.downcase)
