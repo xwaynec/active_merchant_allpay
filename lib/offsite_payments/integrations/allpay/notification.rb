@@ -4,7 +4,6 @@ module OffsitePayments #:nodoc:
   module Integrations #:nodoc:
     module Allpay
       class Notification < OffsitePayments::Notification
-        attr_accessor :hash_key, :hash_iv
 
         def status
           if rtn_code == '1'
@@ -36,12 +35,20 @@ module OffsitePayments #:nodoc:
           end
         end
 
+        def hash_key=(key)
+          @hash_key = key
+        end
+
+        def hash_iv=(iv)
+          @hash_iv = iv
+        end
+
         def hash_key
-          super || OffsitePayments::Integrations::Allpay.hash_key
+          @hash_key || OffsitePayments::Integrations::Allpay.hash_key
         end
 
         def hash_iv
-          super || OffsitePayments::Integrations::Allpay.hash_iv
+          @hash_iv || OffsitePayments::Integrations::Allpay.hash_iv
         end
 
         def checksum_ok?
