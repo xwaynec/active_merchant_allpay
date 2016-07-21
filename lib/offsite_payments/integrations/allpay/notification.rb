@@ -4,6 +4,8 @@ module OffsitePayments #:nodoc:
   module Integrations #:nodoc:
     module Allpay
       class Notification < OffsitePayments::Notification
+        attr_accessor :hash_key, :hash_iv
+
         def status
           if rtn_code == '1'
             true
@@ -34,6 +36,14 @@ module OffsitePayments #:nodoc:
           end
         end
 
+        def hash_key
+          super || OffsitePayments::Integrations::Allpay.hash_key
+        end
+
+        def hash_iv
+          super || OffsitePayments::Integrations::Allpay.hash_iv
+        end
+
         def checksum_ok?
           params_copy = @params.clone
 
@@ -45,7 +55,7 @@ module OffsitePayments #:nodoc:
             "#{x}=#{y}"
           end.join('&')
 
-          hash_raw_data = "HashKey=#{OffsitePayments::Integrations::Allpay.hash_key}&#{raw_data}&HashIV=#{OffsitePayments::Integrations::Allpay.hash_iv}"
+          hash_raw_data = "HashKey=#{hash_key}&#{raw_data}&HashIV=#{hash_iv}"
 
           url_encode_data = OffsitePayments::Integrations::Allpay::Helper.url_encode(hash_raw_data)
           url_encode_data.downcase!

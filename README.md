@@ -85,11 +85,11 @@ OffsitePayments::Integrations::Allpay::PAYMENT_BARCODE
 Once you’ve configured ActiveMerchantAllpay, you need a checkout form; it looks like:
 
 ``` erb
-<% payment_service_for  "#{@order.id}_#{Time.zone.now}",
+<% payment_service_for  @order.id,
                         @order.user.email,
                         :service => :allpay,
                         :html    => { :id => 'allpay-atm-form', :method => :post } do |service| %>
-  <% service.merchant_trade_no @order.identifier %>
+  <% service.merchant_trade_no "#{@order.id}T#{Time.zone.now}" %>
   <% service.merchant_trade_date @order.created_at %>
   <% service.total_amount @order.total.to_i %>
   <% service.description @order.id %>
@@ -125,10 +125,11 @@ end
 You don't need to setup `merchant_id` `hash_key` `hash_iv` in `initializers/*.rb`. setup those data in form helper like below:
 
 ``` erb
-<% payment_service_for  "#{@order.id}_#{Time.zone.now}",
+<% payment_service_for  @order.id,
                         @order.user.email,
                         :service => :allpay,
                         :html    => { :id => 'allpay-atm-form', :method => :post } do |service| %>
+  <% service.merchant_trade_no "#{@order.id}T#{Time.zone.now}" %>
   <% service.merchant_id "YOUR MERCHANT_ID HERE" %>
   <!--
     hash iv and hash key will not show in HTML
