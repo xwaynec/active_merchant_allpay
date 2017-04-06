@@ -1,10 +1,12 @@
-require "active_merchant_allpay/version"
-require "active_merchant"
+require 'action_view'
+require 'active_merchant_allpay/version'
+require 'active_merchant'
+require 'offsite_payments'
 
-module ActiveMerchant
-  module Billing
-    module Integrations
-      autoload :Allpay, 'active_merchant/billing/integrations/allpay'
-    end
+module OffsitePayments
+  module Integrations
+    autoload :Allpay, 'offsite_payments/integrations/allpay'
   end
 end
+
+ActionView::Base.send(:include, OffsitePayments::ActionViewHelper)
