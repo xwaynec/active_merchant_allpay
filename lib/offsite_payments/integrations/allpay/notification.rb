@@ -138,6 +138,10 @@ module OffsitePayments #:nodoc:
           @params['ExpireDate']
         end
 
+        def card4no
+          @params['card4no']
+        end
+
         # for CVS
         def payment_no
           @params['PaymentNo']

@@ -1,8 +1,8 @@
 require 'action_view'
 require 'active_merchant_allpay/version'
 require 'active_merchant'
+require 'money'
 require 'offsite_payments'
-
 module OffsitePayments
   module Integrations
     autoload :Allpay, 'offsite_payments/integrations/allpay'
