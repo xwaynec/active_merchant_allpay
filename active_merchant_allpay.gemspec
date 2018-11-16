@@ -20,7 +20,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'activemerchant'
   spec.add_dependency 'offsite_payments'
-  spec.add_dependency 'money'
   spec.add_development_dependency('test-unit', '~> 2.5.5')
 
   spec.add_development_dependency('rake')
