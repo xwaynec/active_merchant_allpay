@@ -60,6 +60,7 @@ OffsitePayments::Integrations::Allpay.setup do |allpay|
 end
 ```
 
+
 ## Example Usage
 
 Now support three payment methods:
@@ -84,11 +85,11 @@ OffsitePayments::Integrations::Allpay::PAYMENT_BARCODE
 Once you’ve configured ActiveMerchantAllpay, you need a checkout form; it looks like:
 
 ``` erb
-<% payment_service_for  @order,
+<% payment_service_for  @order.id,
                         @order.user.email,
                         :service => :allpay,
                         :html    => { :id => 'allpay-atm-form', :method => :post } do |service| %>
-  <% service.merchant_trade_no @order.identifier %>
+  <% service.merchant_trade_no "#{@order.id}T#{Time.zone.now}" %>
   <% service.merchant_trade_date @order.created_at %>
   <% service.total_amount @order.total.to_i %>
   <% service.description @order.id %>
@@ -117,6 +118,34 @@ def notify
 
   render text: '1|OK', status: 200
 end
+```
+
+## Multiple Merchant Id (dynamic merchant id)
+
+You don't need to setup `merchant_id` `hash_key` `hash_iv` in `initializers/*.rb`. setup those data in form helper like below:
+
+``` erb
+<% payment_service_for  @order.id,
+                        @order.user.email,
+                        :service => :allpay,
+                        :html    => { :id => 'allpay-atm-form', :method => :post } do |service| %>
+  <% service.merchant_trade_no "#{@order.id}T#{Time.zone.now}" %>
+  <% service.merchant_id "YOUR MERCHANT_ID HERE" %>
+  <!--
+    hash iv and hash key will not show in HTML
+    those settings only for encrypted_data
+   -->
+  <% service.hash_key "YOUR HASH KEY HERE" %>
+  <% service.hash_iv "YOUR HASH IV HERE" %>
+  <% service.total_amount @order.total.to_i %>
+  <% service.description @order.id %>
+  <% service.item_name @order.id %>
+  <% service.choose_payment OffsitePayments::Integrations::Allpay::PAYMENT_ATM %>
+  <% service.return_url root_path %>
+  <% service.notify_url allpay_atm_return_url %>
+  <% service.encrypted_data %>
+  <%= submit_tag 'Buy!' %>
+<% end %>
 ```
 
 ## Troublechooting

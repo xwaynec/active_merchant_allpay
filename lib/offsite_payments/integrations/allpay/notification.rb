@@ -4,6 +4,7 @@ module OffsitePayments #:nodoc:
   module Integrations #:nodoc:
     module Allpay
       class Notification < OffsitePayments::Notification
+
         def status
           if rtn_code == '1'
             true
@@ -34,6 +35,22 @@ module OffsitePayments #:nodoc:
           end
         end
 
+        def hash_key=(key)
+          @hash_key = key
+        end
+
+        def hash_iv=(iv)
+          @hash_iv = iv
+        end
+
+        def hash_key
+          @hash_key || OffsitePayments::Integrations::Allpay.hash_key
+        end
+
+        def hash_iv
+          @hash_iv || OffsitePayments::Integrations::Allpay.hash_iv
+        end
+
         def checksum_ok?
           params_copy = @params.clone
 
@@ -45,7 +62,7 @@ module OffsitePayments #:nodoc:
             "#{x}=#{y}"
           end.join('&')
 
-          hash_raw_data = "HashKey=#{OffsitePayments::Integrations::Allpay.hash_key}&#{raw_data}&HashIV=#{OffsitePayments::Integrations::Allpay.hash_iv}"
+          hash_raw_data = "HashKey=#{hash_key}&#{raw_data}&HashIV=#{hash_iv}"
 
           url_encode_data = OffsitePayments::Integrations::Allpay::Helper.url_encode(hash_raw_data)
           url_encode_data.downcase!
@@ -119,6 +136,10 @@ module OffsitePayments #:nodoc:
 
         def expire_date
           @params['ExpireDate']
+        end
+
+        def card4no
+          @params['card4no']
         end
 
         # for CVS

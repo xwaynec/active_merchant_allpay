@@ -165,6 +165,22 @@ module OffsitePayments #:nodoc:
           add_field 'MerchantTradeDate', date.strftime('%Y/%m/%d %H:%M:%S')
         end
 
+        def hash_key(key)
+          @key = key
+        end
+
+        def hash_iv(iv)
+          @iv = iv
+        end
+
+        def merchant_hash_key
+          @key || OffsitePayments::Integrations::Allpay.hash_key
+        end
+
+        def merchant_hash_iv
+          @iv || OffsitePayments::Integrations::Allpay.hash_iv
+        end
+
         def encrypted_data
 
           raw_data = @fields.sort.map{|field, value|
@@ -172,7 +188,7 @@ module OffsitePayments #:nodoc:
             "#{field}=#{value}" if field!='utf8' && field!='authenticity_token' && field!='commit'
           }.join('&')
 
-          hash_raw_data = "HashKey=#{OffsitePayments::Integrations::Allpay.hash_key}&#{raw_data}&HashIV=#{OffsitePayments::Integrations::Allpay.hash_iv}"
+          hash_raw_data = "HashKey=#{merchant_hash_key}&#{raw_data}&HashIV=#{merchant_hash_iv}"
           url_encode_data = self.class.url_encode(hash_raw_data)
           url_encode_data.downcase!
 
